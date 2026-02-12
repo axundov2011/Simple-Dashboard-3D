@@ -14,7 +14,7 @@ export default function Designers() {
 
   useEffect(() => {
     fetchDesigners();
-    fetchObjects(); // attached count üçün lazımdır
+    fetchObjects(); 
   }, [fetchDesigners, fetchObjects]);
 
   return (

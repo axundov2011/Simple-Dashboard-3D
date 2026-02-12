@@ -104,7 +104,6 @@ function SceneContent({
 
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
-  // Double click -> ONLY on ground plane
   const onGroundDoubleClick = async (e: any) => {
     e.stopPropagation();
 
@@ -143,7 +142,6 @@ function SceneContent({
         position={[0, 0, 0]}
         onPointerDown={(e) => {
           e.stopPropagation();
-          // boş yerə klik edəndə selection silinsin
           selectObject(null);
         }}
         onDoubleClick={onGroundDoubleClick}

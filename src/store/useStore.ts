@@ -5,7 +5,6 @@ import { designersApi } from "../api/designersApi";
 import { objectsApi } from "../api/objectsApi";
 
 type AppState = {
-  // Designers
   designers: Designer[];
   designersLoading: boolean;
   selectedDesignerId: string | null;
@@ -14,7 +13,6 @@ type AppState = {
   addDesigner: (input: CreateDesignerInput) => Promise<void>;
   selectDesigner: (id: string | null) => void;
 
-  // Objects
   objects: Object3DModel[];
   objectsLoading: boolean;
   selectedObjectId: string | null;
@@ -24,7 +22,6 @@ type AppState = {
   updateObject: (id: string, patch: Partial<Object3DModel>) => Promise<void>;
   selectObject: (id: string | null) => void;
 
-  // Derived helpers
   getAttachedCountForDesigner: (designerId: string) => number;
 };
 
@@ -66,7 +63,6 @@ export const useStore = create<AppState>((set, get) => ({
   updateObject: async (id, patch) => {
     const next = get().objects.map((o) => (o.id === id ? { ...o, ...patch } : o));
     set({ objects: next });
-    // persist whole list
     await objectsApi.updateMany(next);
   },
 
