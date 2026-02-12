@@ -1,0 +1,46 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.25);
+  color: #e8eefc;
+  outline: none;
+
+  &:focus {
+    border-color: rgba(99, 102, 241, 0.7);
+  }
+}
+
+.btn {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 0;
+  background: rgba(99, 102, 241, 0.9);
+  color: white;
+  font-weight: 650;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  color: #ff9aa2;
+  font-size: 12px;
+}

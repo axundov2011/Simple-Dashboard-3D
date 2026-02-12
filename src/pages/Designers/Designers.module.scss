@@ -1,0 +1,50 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: 14px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.muted {
+  color: rgba(232, 238, 252, 0.72);
+  font-size: 14px;
+}
+
+.list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.title {
+  font-weight: 650;
+}
+
+.badge {
+  background: rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+}

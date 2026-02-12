@@ -1,0 +1,25 @@
+.editorGrid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 14px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.canvasCard,
+.propsCard {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.canvasCard {
+  min-height: 680px;
+}
+
+.propsCard {
+  min-height: 680px;
+}
