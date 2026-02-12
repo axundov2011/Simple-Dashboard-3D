@@ -1,15 +1,12 @@
 import { z } from "zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "../../store/useStore";
 import styles from "./AddDesignerForm.module.scss";
 
 const schema = z.object({
   fullName: z.string().min(3, "Full name must be at least 3 characters"),
-  workingHours: z.preprocess(
-    (v) => (typeof v === "string" ? Number(v) : v),
-    z.number().int("Must be an integer").min(1, "Min 1").max(80, "Max 80")
-  ),
+  workingHours: z.coerce.number().int("Must be an integer").min(1, "Min 1").max(80, "Max 80"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -18,18 +15,20 @@ export default function AddDesignerForm() {
   const addDesigner = useStore((s) => s.addDesigner);
   const loading = useStore((s) => s.designersLoading);
 
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema) as unknown as any, 
+    defaultValues: { fullName: "", workingHours: 40 },
+    mode: "onSubmit",
+  });
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: { fullName: "", workingHours: 40 },
-    mode: "onSubmit",
-  });
+  } = form;
 
-  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+  const onSubmit = async (values: FormValues) => {
     await addDesigner(values);
     reset({ fullName: "", workingHours: 40 });
   };
@@ -38,11 +37,7 @@ export default function AddDesignerForm() {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <label className={styles.label}>
         <span>Full name</span>
-        <input
-          className={styles.input}
-          placeholder="e.g. Ayhan Ak"
-          {...register("fullName")}
-        />
+        <input className={styles.input} placeholder="e.g. Ayhan Ak" {...register("fullName")} />
         {errors.fullName && <span className={styles.error}>{errors.fullName.message}</span>}
       </label>
 
