@@ -6,8 +6,6 @@ import { useStore } from "../../store/useStore";
 import type { Object3DModel, ObjSize } from "../../models/object3d";
 import styles from "./Canvas3D.module.scss";
 
-type HoverState = { id: string | null };
-
 function sizeToScale(size: ObjSize): number {
   if (size === "small") return 0.7;
   if (size === "large") return 1.4;
@@ -73,7 +71,7 @@ function BoxItem({
 
         const hit = e.ray.intersectPlane(dragPlane, tmp);
         if (!hit) return;
-        // e.point ground plane ilə kəsişmə nöqtəsi kimi gəlir (bizdə plane var)
+
         updateObject(obj.id, { position: [hit.x, 0.5, hit.z] });
       }}
     >
@@ -93,30 +91,26 @@ function BoxItem({
 function SceneContent({
   orbitEnabled,
   setOrbitEnabled,
+  setToast,
 }: {
   orbitEnabled: boolean;
   setOrbitEnabled: (v: boolean) => void;
+  setToast: (msg: string | null) => void;
 }) {
   const objects = useStore((s) => s.objects);
   const selectedDesignerId = useStore((s) => s.selectedDesignerId);
   const addObject = useStore((s) => s.addObject);
   const selectObject = useStore((s) => s.selectObject);
 
-  const [hover, setHover] = useState<HoverState>({ id: null });
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   // Double click -> ONLY on ground plane
-  const onGroundDoubleClick = async (
-    e: any,
-    setToast: (msg: string) => void
-  ) => {
+  const onGroundDoubleClick = async (e: any) => {
     e.stopPropagation();
 
     if (!selectedDesignerId) {
       setToast("Select a designer first to add objects.");
-      setTimeout(
-        () => setToast("Select a designer first to add objects"),
-        1800
-      );
+      setTimeout(() => setToast(null), 1800);
       return;
     }
 
@@ -148,8 +142,8 @@ function SceneContent({
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}
         onPointerDown={(e) => {
-          // boş yerə klik edəndə selection silinsin deye yazdım bu  hisseni baxa bilersiniz
           e.stopPropagation();
+          // boş yerə klik edəndə selection silinsin
           selectObject(null);
         }}
         onDoubleClick={onGroundDoubleClick}
@@ -162,8 +156,8 @@ function SceneContent({
         <BoxItem
           key={o.id}
           obj={o}
-          hoveredId={hover.id}
-          setHoveredId={(id) => setHover({ id })}
+          hoveredId={hoveredId}
+          setHoveredId={setHoveredId}
           setOrbitEnabled={setOrbitEnabled}
         />
       ))}
@@ -174,7 +168,7 @@ function SceneContent({
 }
 
 export default function Canvas3D() {
-  const [toast, _setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
   const [orbitEnabled, setOrbitEnabled] = useState(true);
 
   return (
@@ -190,6 +184,7 @@ export default function Canvas3D() {
           <SceneContent
             orbitEnabled={orbitEnabled}
             setOrbitEnabled={setOrbitEnabled}
+            setToast={setToast}
           />
         </Canvas>
       </div>
