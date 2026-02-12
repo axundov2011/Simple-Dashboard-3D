@@ -3,9 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "engines": {
-    "node": "22.x"
-  },
+  "engines": { "node": "22.x" }
+,
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -18,7 +17,6 @@
     "@hookform/resolvers": "^5.2.2",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
-    "node": "^22.12.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.71.1",
@@ -46,5 +44,6 @@
     "typescript-eslint": "^8.48.0",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
+
   }
 }
