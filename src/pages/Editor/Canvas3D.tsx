@@ -174,7 +174,7 @@ function SceneContent({
 }
 
 export default function Canvas3D() {
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, _setToast] = useState<string | null>(null);
   const [orbitEnabled, setOrbitEnabled] = useState(true);
 
   return (
